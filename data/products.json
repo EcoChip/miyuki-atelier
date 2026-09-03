@@ -1,0 +1,110 @@
+[
+  {
+    "id": "pulsera-rombo-oro",
+    "title": "Pulsera 'Arena, Rombo & Oro'",
+    "price": 28.0,
+    "inStock": true,
+    "category": "pulseras",
+    "badge": "DISEÑO ORIGINAL DE TALLER",
+    "shortDesc": "Fondo blanco marfil satinado con rombos geométricos en oro brillante. Cordón corredizo beige ajustable.",
+    "desc": "Tejida a mano con auténtico cristal japonés Miyuki Delica. Los rombos geométricos en tono oro capturan la luz con un brillo sutil y sofisticado. El cierre con cordón corredizo y bolitas doradas se adapta a cualquier tamaño de muñeca. Incluye presentación sobre rodaja de madera, tarjeta botánica y bolsita de lino lista para regalar.",
+    "photos": [
+      "assets/products/pulsera-rombo-oro-natural.jpg",
+      "assets/products/pulsera-rombo-oro-pack.jpg",
+      "assets/products/pulsera-rombo-oro-muneca-1.jpg",
+      "assets/products/pulsera-rombo-oro-muneca-2.jpg"
+    ]
+  },
+  {
+    "id": "pulsera-terracota",
+    "title": "Pulsera 'Atardecer Terracota'",
+    "price": 28.0,
+    "inStock": true,
+    "category": "pulseras",
+    "badge": "TENDENCIA",
+    "shortDesc": "Gama cálida de tierras, arcilla y toques de oro mate. Ideal para pieles morenas.",
+    "desc": "Inspirada en las puestas de sol mediterráneas. Los cristales Miyuki en tonos terracota, caliza y oro envejecido crean un degradé envolvente. Muy ligera y cómoda para llevar a diario sin notar peso en la muñeca.",
+    "photos": [
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "pulsera-salvia",
+    "title": "Pulsera 'Verde Salvia & Bronce'",
+    "price": 26.0,
+    "inStock": true,
+    "category": "pulseras",
+    "badge": "DISEÑO BOTÁNICO",
+    "shortDesc": "Tonos naturales de verde hoja suave combinados con bronce envejecido.",
+    "desc": "Una pieza discreta inspirada en la vegetación mediterránea. Combina cristal Miyuki mate con destellos en bronce pulido. Cierre ajustable hipoalergénico apto para pieles sensibles.",
+    "photos": [
+      "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "pulsera-noche",
+    "title": "Pulsera 'Noche & Oro Puro'",
+    "price": 30.0,
+    "inStock": true,
+    "category": "pulseras",
+    "badge": "EDICIÓN ELEGANTE",
+    "shortDesc": "Negro carbón mate y oro galvanizado de máxima resistencia.",
+    "desc": "El clásico que nunca pasa de moda. El contraste del negro mate aterciopelado con el brillo del oro japonés crea un acabado de auténtica alta joyería. Cierre corredizo rematado con cuentas doradas.",
+    "photos": [
+      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "pendientes-brisa",
+    "title": "Pendientes 'Brisa Marina'",
+    "price": 32.0,
+    "inStock": true,
+    "category": "pendientes",
+    "badge": "PESO PLUMA",
+    "shortDesc": "Flecos en degradado de azul océano y perla con caída libre.",
+    "desc": "Maxi-pendientes súper ligeros tejidos con aguja fina. La precisión de las cuentas Miyuki garantiza que ambos pendientes caigan con idéntico movimiento y peso. Enganche bañado en oro hipoalergénico.",
+    "photos": [
+      "https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "pendientes-gota",
+    "title": "Pendientes 'Gota de Luz'",
+    "price": 24.0,
+    "inStock": true,
+    "category": "pendientes",
+    "badge": "DE DIARIO",
+    "shortDesc": "Pequeños y delicados con perla de cristal Miyuki central.",
+    "desc": "La joya perfecta para llevar todos los días. Minimalista, ligera y con un destello sutil que ilumina el rostro sin recargar. Acabado dorado inalterable.",
+    "photos": [
+      "https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "collar-loto",
+    "title": "Gargantilla 'Loto Delicado'",
+    "price": 38.0,
+    "inStock": true,
+    "category": "collares",
+    "badge": "EDICIÓN ESPECIAL",
+    "shortDesc": "Cadena de acero inoxidable con motivo central de cristal tejido a mano.",
+    "desc": "Gargantilla ajustable al cuello que combina una cadenita hipoalergénica de alta durabilidad con una pieza tejida cuenta a cuenta en nuestro taller. Se entrega en cajita y bolsita de lino.",
+    "photos": [
+      "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=800&q=80"
+    ]
+  },
+  {
+    "id": "pack-duo-regalo",
+    "title": "Pack Dúo 'Armonía' (2 Pulseras)",
+    "price": 48.0,
+    "inStock": true,
+    "category": "pulseras",
+    "badge": "PACK REGALO",
+    "shortDesc": "Dos pulseras complementarias que combinan entre sí. Ahorro de 6 €.",
+    "desc": "Incluye la pulsera 'Arena, Rombo & Oro' junto con la pulsera 'Atardecer Terracota'. Llegan presentadas conjuntamente en una cajita especial de regalo con tarjeta personalizada.",
+    "photos": [
+      "assets/products/pulsera-rombo-oro-natural.jpg",
+      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80"
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+# Miyuki Atelier - Servidor nativo Python estándar (0 dependencias externas)
+# Compatible con Python 3.10+

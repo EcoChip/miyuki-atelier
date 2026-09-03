@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Joyas Miyuki Hechas a Mano | Colección Atelier</title>
+  <meta name="description" content="Explora nuestra colección de pulseras ajustables, pendientes y collares tejidos a mano con cristal Miyuki. Piezas únicas hechas en España.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Supabase Cloud 24/7 (Base de datos y Fotos en la Nube) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+<body class="page-wrapper">
+
+  <aside class="top-bar">
+    <div class="top-bar-item">✨ Hecho a mano en España, cuenta a cuenta</div>
+    <div class="top-bar-item">📦 Envíos gratis desde 45 €</div>
+    <div class="top-bar-item">🎁 Bolsita de lino y nota incluida para regalo</div>
+  </aside>
+
+  <header class="header-nav">
+    <div class="padding-global">
+      <div class="container-large nav-inner">
+        <a href="index.html" class="brand-logo">
+          <span class="logo-title">Miyuki Atelier</span>
+          <span class="logo-subtitle">Hecho a mano con amor</span>
+        </a>
+
+        <nav class="nav-menu">
+          <a href="index.html" class="nav-link">Inicio</a>
+          <a href="catalogo.html" class="nav-link active">Colección</a>
+          <a href="index.html#historia" class="nav-link">Quiénes Somos</a>
+          <a href="contacto.html" class="nav-link">Contacto &amp; Encargos</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button type="button" class="cart-trigger-btn" aria-label="Ver mi bolsita de joyas">
+            <span>Bolsita</span>
+            <span class="cart-count">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-wrapper">
+    <section class="section_products">
+      <div class="padding-global">
+        <div class="container-large">
+          
+          <div class="section-header">
+            <span class="badge-natural">Catálogo Completo</span>
+            <h1>Piezas hechas a mano con amor</h1>
+            <p>Elige tu joya favorita o combínalas. Cada pieza se envía en su bolsita de lino lista para regalar.</p>
+          </div>
+
+          <!-- Filtros de Categoría -->
+          <div class="category-filter" role="tablist">
+            <button type="button" class="filter-btn active" data-filter="all">Todas las piezas</button>
+            <button type="button" class="filter-btn" data-filter="pulseras">Pulseras</button>
+            <button type="button" class="filter-btn" data-filter="pendientes">Pendientes</button>
+            <button type="button" class="filter-btn" data-filter="collares">Collares</button>
+          </div>
+
+          <!-- Cuadrícula de Productos Minoristas -->
+          <div class="products-grid">
+            
+            <!-- 1. Pulsera Arena, Rombo & Oro (La Primera Creación de Mamá) -->
+            <article class="product-card" data-product-id="pulsera-rombo-oro" data-category="pulseras">
+              <div class="product-media">
+                <img id="main-img-rombo-oro" src="assets/products/pulsera-rombo-oro-natural.jpg" alt="Pulsera Arena Rombo y Oro Miyuki tejida a mano">
+                <span class="product-pill">ORIGINAL DE MAMÁ • N.º 01</span>
+              </div>
+              <!-- Miniaturas para ver todos los ángulos y presentación -->
+              <div class="product-thumbs" aria-label="Fotos de la pulsera">
+                <button type="button" class="product-thumb-btn active" data-target="main-img-rombo-oro" data-src="assets/products/pulsera-rombo-oro-natural.jpg" aria-label="Ver sobre madera y lino">
+                  <img src="assets/products/pulsera-rombo-oro-natural.jpg" alt="Madera y lino">
+                </button>
+                <button type="button" class="product-thumb-btn" data-target="main-img-rombo-oro" data-src="assets/products/pulsera-rombo-oro-pack.jpg" aria-label="Ver presentación con tarjeta botánica y rodaja de madera">
+                  <img src="assets/products/pulsera-rombo-oro-pack.jpg" alt="Presentación regalo">
+                </button>
+                <button type="button" class="product-thumb-btn" data-target="main-img-rombo-oro" data-src="assets/products/pulsera-rombo-oro-muneca-1.jpg" aria-label="Ver en la muñeca">
+                  <img src="assets/products/pulsera-rombo-oro-muneca-1.jpg" alt="En la muñeca">
+                </button>
+                <button type="button" class="product-thumb-btn" data-target="main-img-rombo-oro" data-src="assets/products/pulsera-rombo-oro-muneca-2.jpg" aria-label="Ver detalle cordón corredizo">
+                  <img src="assets/products/pulsera-rombo-oro-muneca-2.jpg" alt="Detalle cordón">
+                </button>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pulsera 'Arena, Rombo &amp; Oro'</h2>
+                <p class="product-short-desc">
+                  Tejida cuenta a cuenta con auténtico cristal japonés Miyuki Delica. Fondo blanco marfil satinado con rombos geométricos en oro brillante. Cordón corredizo beige con remate de bolitas doradas, adaptable a cualquier muñeca. Incluye presentación en tarjeta botánica y bolsita de lino.
+                </p>
+                <div class="product-footer">
+                  <span class="product-price">28.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2. Pulsera Terracota -->
+            <article class="product-card" data-product-id="pulsera-terracota" data-category="pulseras">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80" alt="Pulsera Terracota Atardecer">
+                <span class="product-pill">TENDENCIA</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pulsera 'Atardecer Terracota'</h2>
+                <p class="product-short-desc">Gama cálida de tierras, arcilla y dorado mate. Perfecta para realzar el moreno en verano.</p>
+                <div class="product-footer">
+                  <span class="product-price">28.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3. Pulsera Salvia y Bronce -->
+            <article class="product-card" data-product-id="pulsera-salvia" data-category="pulseras">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=80" alt="Pulsera Verde Salvia">
+                <span class="product-pill">DISEÑO BOTÁNICO</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pulsera 'Verde Salvia &amp; Bronce'</h2>
+                <p class="product-short-desc">Tonos naturales de verde bosque suave con toques bronce envejecido. Muy sutil y elegante.</p>
+                <div class="product-footer">
+                  <span class="product-price">26.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4. Pulsera Noche de Gala -->
+            <article class="product-card" data-product-id="pulsera-noche" data-category="pulseras">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80" alt="Pulsera Negra y Dorada">
+                <span class="product-pill">CLÁSICA</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pulsera 'Noche &amp; Oro Puro'</h2>
+                <p class="product-short-desc">Negro carbón mate y baño de oro resistente. El diseño que nunca falla para salir a cenar.</p>
+                <div class="product-footer">
+                  <span class="product-price">30.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5. Pendientes Brisa Marina -->
+            <article class="product-card" data-product-id="pendientes-brisa" data-category="pendientes">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80" alt="Pendientes Brisa Marina">
+                <span class="product-pill">PESO PLUMA</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pendientes 'Brisa Marina'</h2>
+                <p class="product-short-desc">Flecos en degradado de azules y arena. No pesan absolutamente nada en la oreja.</p>
+                <div class="product-footer">
+                  <span class="product-price">32.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 6. Pendientes Gota de Luz -->
+            <article class="product-card" data-product-id="pendientes-gota" data-category="pendientes">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=600&q=80" alt="Pendientes Gota de Luz">
+                <span class="product-pill">DIARIO</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pendientes 'Gota de Luz'</h2>
+                <p class="product-short-desc">Pequeños y luminosos con perla de cristal Miyuki. Hipoalergénicos para uso diario.</p>
+                <div class="product-footer">
+                  <span class="product-price">24.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 7. Gargantilla Loto -->
+            <article class="product-card" data-product-id="collar-loto" data-category="collares">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=600&q=80" alt="Gargantilla Delicada Loto">
+                <span class="product-pill">EDICIÓN ESPECIAL</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Gargantilla 'Loto Delicado'</h2>
+                <p class="product-short-desc">Cadena finísima de acero inoxidable con pieza central de cristal tejida a mano.</p>
+                <div class="product-footer">
+                  <span class="product-price">38.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- 8. Pack Dúo Regalo -->
+            <article class="product-card" data-product-id="pack-duo-regalo" data-category="pulseras">
+              <div class="product-media">
+                <img src="https://images.unsplash.com/photo-1611591475883-9b88939c0f99?auto=format&fit=crop&w=600&q=80" alt="Pack de 2 Pulseras">
+                <span class="product-pill">PACK REGALO (AHORRO)</span>
+              </div>
+              <div class="product-body">
+                <h2 class="product-title">Pack Dúo 'Armonía' (2 pulseras)</h2>
+                <p class="product-short-desc">Dos pulseras que combinan a la perfección juntas. Llegan en su cajita y bolsita de lino.</p>
+                <div class="product-footer">
+                  <span class="product-price">48.00 €</span>
+                  <button type="button" class="btn btn-primary btn-sm btn-add-cart">Añadir a la bolsita</button>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Asistencia para pedidos a medida -->
+          <div style="background:var(--color-sand-soft); border-radius:var(--radius-lg); padding:2rem; margin-top:3.5rem; text-align:center; border:1px solid var(--color-border);">
+            <h3 style="font-family:var(--font-serif); font-size:1.4rem; margin-bottom:0.5rem;">¿Buscas una combinación de colores personalizada?</h3>
+            <p style="font-size:0.9rem; color:var(--color-espresso-light); max-width:32rem; margin:0 auto 1.25rem auto;">
+              Si tienes un vestido para una boda o quieres regalar una pulsera en los colores favoritos de alguien, podemos tejerla a medida para ti en el taller.
+            </p>
+            <a href="https://wa.me/34629365884?text=Hola!%20Me%20gustaría%20encargar%20una%20pulsera%20con%20colores%20personalizados" target="_blank" class="btn btn-whatsapp">
+              💬 Consultar encargo por WhatsApp
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       MODAL DE DETALLE DE PRODUCTO GRANDE (QUICK VIEW)
+       ========================================================================= -->
+  <div class="product-modal-overlay" id="product-detail-modal" role="dialog" aria-modal="true" aria-label="Detalle de joya">
+    <div class="product-modal-card">
+      <button type="button" class="btn-close-modal-detail" id="btn-close-detail-modal" aria-label="Cerrar ventana">&times;</button>
+      
+      <div class="product-modal-grid">
+        <div class="product-modal-gallery">
+          <div class="product-modal-main-img-wrap">
+            <img id="modal-detail-main-img" src="" alt="Joya Miyuki">
+          </div>
+          <div class="product-modal-thumbs-row" id="modal-detail-thumbs"></div>
+        </div>
+
+        <div class="product-modal-info">
+          <span class="product-modal-badge" id="modal-detail-badge">PIEZA DE AUTOR</span>
+          <h2 class="product-modal-title" id="modal-detail-title">Cargando...</h2>
+          
+          <div class="product-modal-price-row">
+            <span class="product-modal-price" id="modal-detail-price">0.00 €</span>
+            <span class="badge-stock badge-in-stock" id="modal-detail-stock">En Stock</span>
+          </div>
+
+          <p class="product-modal-desc" id="modal-detail-desc"></p>
+
+          <ul class="product-modal-perks">
+            <li>✓ Auténtico cristal japonés Miyuki Delica</li>
+            <li>✓ Cierre corredizo ajustable (apto para cualquier muñeca)</li>
+            <li>✓ Incluye bolsita de lino y tarjeta lista para regalo</li>
+            <li>✓ Envío certificado con seguimiento en 24/48h</li>
+          </ul>
+
+          <div class="product-modal-actions">
+            <button type="button" class="btn btn-primary btn-full" id="modal-btn-add-cart">
+              Añadir a mi bolsita
+            </button>
+            <button type="button" class="btn btn-whatsapp btn-full" id="modal-btn-whatsapp">
+              📲 Pedir directamente por WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DE LOGIN PRIVADO DEL TALLER (ANTI-FUERZA BRUTA)
+       ========================================================================= -->
+  <div class="admin-modal-overlay" id="admin-login-modal" role="dialog" aria-modal="true" aria-label="Acceso privado al taller">
+    <div class="admin-modal-card admin-login-card">
+      <button type="button" class="btn-close-modal-detail btn-close-admin" aria-label="Cerrar">&times;</button>
+      <div style="font-size:2.2rem; margin-bottom:0.5rem;">🔒</div>
+      <h3 style="font-family:var(--font-serif); font-size:1.35rem; margin-bottom:0.4rem;">Acceso Privado al Taller</h3>
+      <p style="font-size:0.8rem; color:var(--color-espresso-light); margin-bottom:1.5rem;">
+        Introduce tu contraseña personal para gestionar el catálogo y el stock.
+      </p>
+
+      <form id="admin-login-form">
+        <div class="form-group" style="text-align:left;">
+          <label for="admin-password-input">Contraseña Maestra</label>
+          <input type="password" id="admin-password-input" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+
+        <div id="admin-lockout-msg" class="lockout-msg" style="display:none;"></div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="btn-submit-admin-login" style="margin-top:1rem;">
+          Acceder al Panel del Taller &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DE PANEL DE CONTROL DEL TALLER (CREAR / EDITAR / STOCK)
+       ========================================================================= -->
+  <div class="admin-modal-overlay" id="admin-dashboard-modal" role="dialog" aria-modal="true" aria-label="Panel de control del taller">
+    <div class="admin-modal-card">
+      <div class="admin-header">
+        <div>
+          <h3>Panel de Creación y Stock</h3>
+          <p style="font-size:0.75rem; color:#888;">Gestión directa de anuncios en tu tienda</p>
+        </div>
+        <div style="display:flex; gap:0.5rem; align-items:center;">
+          <button type="button" class="btn btn-sm btn-secondary" id="btn-admin-logout">Cerrar Sesión</button>
+          <button type="button" class="btn-close-modal-detail btn-close-admin" aria-label="Cerrar">&times;</button>
+        </div>
+      </div>
+
+      <div class="admin-tabs">
+        <button type="button" class="admin-tab-btn active" data-tab="tab-create-product">➕ Crear Anuncio</button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-manage-products">📦 Gestionar Anuncios</button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-change-pwd">🔑 Cambiar Contraseña</button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-supabase">☁️ Supabase 24/7</button>
+      </div>
+
+      <!-- Tab 1: Crear Anuncio -->
+      <div class="admin-tab-content" id="tab-create-product">
+        <form id="form-create-product" class="admin-form">
+          <div class="admin-form-row-2">
+            <div class="form-group">
+              <label for="new-prod-title">Nombre de la Joya</label>
+              <input type="text" id="new-prod-title" class="form-control" placeholder="Ej. Pulsera Coral &amp; Oro" required>
+            </div>
+            <div class="form-group">
+              <label for="new-prod-category">Categoría</label>
+              <select id="new-prod-category" class="form-control">
+                <option value="pulseras">Pulseras</option>
+                <option value="pendientes">Pendientes</option>
+                <option value="collares">Collares</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="admin-form-row-2">
+            <div class="form-group">
+              <label for="new-prod-price">Precio (€)</label>
+              <input type="number" id="new-prod-price" class="form-control" step="0.50" placeholder="28.00" required>
+            </div>
+            <div class="form-group">
+              <label for="new-prod-badge">Etiqueta Destacada</label>
+              <input type="text" id="new-prod-badge" class="form-control" placeholder="Ej. NUEVA CREACIÓN / EXCLUSIVA">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+              <input type="checkbox" id="new-prod-stock" checked style="width:18px; height:18px; accent-color:var(--color-terracotta);">
+              <span>Marcar como <strong>En Stock</strong> (si se desmarca, aparecerá como 'Bajo Encargo')</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="new-prod-desc">Descripción y Detalles</label>
+            <textarea id="new-prod-desc" class="form-control" placeholder="Explica los tonos del cristal, el tipo de cierre y por qué es especial..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="new-prod-img-file">Subir Fotos de la Joya (puedes seleccionar varias fotos a la vez)</label>
+            <input type="file" id="new-prod-img-file" class="form-control" accept="image/*" multiple>
+            <small style="color:#777; font-size:0.75rem; display:block; margin-top:0.25rem;">
+              📸 Las fotos se optimizan y guardan automáticamente en el servidor y en la base de datos del taller.
+            </small>
+            <div id="new-prod-preview-strip" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-full" id="btn-submit-create-prod" style="margin-top:0.5rem;">
+            Publicar Anuncio en la Tienda &rarr;
+          </button>
+        </form>
+      </div>
+
+      <!-- Tab 2: Gestionar Anuncios -->
+      <div class="admin-tab-content" id="tab-manage-products" style="display:none;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Joya</th>
+              <th>PVP</th>
+              <th>Stock</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="admin-products-table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- Tab 3: Cambiar Contraseña -->
+      <div class="admin-tab-content" id="tab-change-pwd" style="display:none;">
+        <form id="form-change-password" class="admin-form" style="max-width:24rem;">
+          <p style="font-size:0.8rem; color:#666;">Elige una contraseña segura que solo tú conozcas.</p>
+          <div class="form-group">
+            <label for="new-admin-password">Nueva Contraseña</label>
+            <input type="password" id="new-admin-password" class="form-control" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label for="confirm-admin-password">Confirmar Nueva Contraseña</label>
+            <input type="password" id="confirm-admin-password" class="form-control" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn-primary">Guardar Nueva Contraseña</button>
+        </form>
+      </div>
+
+      <!-- Tab 4: Conectar Supabase 24/7 -->
+      <div class="admin-tab-content" id="tab-supabase" style="display:none;">
+        <form id="form-connect-supabase" class="admin-form" style="max-width:32rem;">
+          <div id="supabase-connection-status" style="padding:0.75rem; border-radius:6px; background:#F4F4F4; font-size:0.82rem; margin-bottom:0.75rem;">
+            ⚪ Estado: Cargando estado de conexión...
+          </div>
+          <p style="font-size:0.8rem; color:var(--color-espresso-light); line-height:1.5;">
+            Conecta tu proyecto gratuito de <strong>Supabase</strong> para que la base de datos y el almacén de fotos funcionen 24/7 en la nube de Vercel sin depender de tu ordenador.
+          </p>
+          <div class="form-group">
+            <label for="supabase-project-url">URL del Proyecto Supabase (Project URL)</label>
+            <input type="url" id="supabase-project-url" class="form-control" placeholder="https://tu-proyecto.supabase.co" required>
+          </div>
+          <div class="form-group">
+            <label for="supabase-anon-key">Clave Pública Anónima (Anon / Public Key)</label>
+            <input type="text" id="supabase-anon-key" class="form-control" placeholder="eyJhbGciOiJIUzI1NiIsIn..." required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="btn-save-supabase">
+            Guardar Conexión Supabase
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Carrito Drawer -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay" role="dialog" aria-modal="true" aria-label="Tu bolsita de compra">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <h3>Tu Bolsita de Joyas</h3>
+        <button type="button" class="btn-close-cart" id="btn-close-cart" aria-label="Cerrar bolsita">&times;</button>
+      </div>
+
+      <div class="cart-items-list" id="cart-drawer-items"></div>
+
+      <div class="cart-footer">
+        <div class="cart-total-row">
+          <span>Total:</span>
+          <span id="cart-subtotal-price">0.00 €</span>
+        </div>
+        <button type="button" class="btn btn-whatsapp btn-full" id="btn-checkout-whatsapp">
+          📲 Finalizar Pedido por WhatsApp
+        </button>
+        <p class="cart-note">
+          Confirmas tu pedido directamente con nosotros por WhatsApp para acordar dirección, detalles de regalo y bizum/transferencia cómoda.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/34629365884" class="whatsapp-floating" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+
+  <footer class="footer-boutique">
+    <div class="padding-global">
+      <div class="container-large">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Miyuki Atelier</h4>
+            <p style="color:var(--color-espresso-light); line-height:1.6; margin-bottom: 0.8rem;">
+              Joyería artesanal tejida con paciencia y cariño. Cristal japonés de alta gama hecho para durar.
+            </p>
+            <p><strong>Instagram:</strong> <a href="https://instagram.com" target="_blank" style="color:var(--color-terracotta); font-weight:600;">@taller.miyuki</a></p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Tienda</h4>
+            <ul class="footer-links">
+              <li><a href="catalogo.html">Ver Catálogo</a></li>
+              <li><a href="index.html#historia">El Taller Artesanal</a></li>
+              <li><a href="contacto.html">Encargos a Medida</a></li>
+              <li><a href="https://wa.me/34629365884">WhatsApp Directo</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Información Legal</h4>
+            <ul class="footer-links">
+              <li><a href="aviso-legal.html">Aviso Legal &amp; Envíos</a></li>
+              <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+              <li><a href="politica-cookies.html">Política de Cookies</a></li>
+              <li><a href="contacto.html">Atención al Cliente</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <p>© 2026 Miyuki Atelier. Joyas de autor hechas a mano con amor.</p>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <span>Envíos seguros a toda España</span>
+            <button type="button" class="btn-admin-access" id="btn-open-admin-access">
+              🔒 Acceso Taller / Crear Anuncio
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
