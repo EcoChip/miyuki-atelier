@@ -149,6 +149,10 @@ class AtelierHandler(http.server.SimpleHTTPRequestHandler):
 
         self.send_json({"error": "Ruta no encontrada"}, 404)
 
+# Compatibilidad con Vercel Serverless
+handler = AtelierHandler
+app = AtelierHandler
+
 if __name__ == "__main__":
     socketserver.TCPServer.allow_reuse_address = True
     print(f"Servidor Miyuki Atelier activo en http://localhost:{PORT}")
