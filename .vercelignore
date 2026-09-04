@@ -1,4 +1,3 @@
-server.py
-Procfile
-requirements.txt
-render.yaml
+local_dev/
+.git/
+analytics/
