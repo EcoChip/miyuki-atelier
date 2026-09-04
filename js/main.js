@@ -1140,6 +1140,11 @@
         document.getElementById('bizum-success-phone').textContent = phone;
         document.getElementById('bizum-success-address').textContent = fullAddress;
         document.getElementById('bizum-success-items').textContent = itemsSummary;
+
+        var emailEl = document.getElementById('bizum-success-email');
+        if (emailEl) emailEl.textContent = email;
+        var emailBadge = document.getElementById('bizum-success-email-badge');
+        if (emailBadge) emailBadge.textContent = email;
         
         var subtotalEl = document.getElementById('bizum-success-subtotal');
         if (subtotalEl) subtotalEl.textContent = activeBizumOrder.subtotal.toFixed(2) + ' €';
@@ -1159,7 +1164,7 @@
           noteWrap.style.display = 'none';
         }
 
-        // 3. Enviar notificación por Email vía Formspree (en segundo plano y silencioso)
+        // 3. Enviar notificación por Email vía Formspree (con soporte para Autoresponder)
         var formspreeId = ATELIER_CONFIG.formspreeId || localStorage.getItem('miyuki_formspree_id');
         if (formspreeId) {
           var endpoint = formspreeId.startsWith('http') ? formspreeId : `https://formspree.io/f/${formspreeId}`;
@@ -1167,18 +1172,21 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
-              _subject: `📦 Nuevo Pedido ${activeBizumOrder.ref} - ${name} (Bizum Pendiente)`,
+              _subject: `✨ Pedido ${activeBizumOrder.ref} - ${name} (Miyuki Atelier)`,
+              _replyto: email,
+              email: email,
               codigo_pedido: activeBizumOrder.ref,
               cliente_nombre: name,
               cliente_telefono: phone,
-              cliente_email: email || 'No indicado',
+              cliente_email: email,
               direccion_envio: fullAddress,
               joyas_pedidas: itemsSummary,
               subtotal: activeBizumOrder.subtotal.toFixed(2) + ' €',
               envio: activeBizumOrder.shipping === 0 ? 'Gratis' : activeBizumOrder.shipping.toFixed(2) + ' €',
               total_a_pagar: activeBizumOrder.total.toFixed(2) + ' €',
-              dedicatoria_regalo: note || 'Ninguna',
-              estado: 'El cliente ve su recibo en pantalla y enviará el Bizum con este código: ' + activeBizumOrder.ref
+              telefono_bizum: '629 365 884',
+              instrucciones_bizum: 'Realiza el Bizum al 629 365 884 indicando en el concepto ' + activeBizumOrder.ref,
+              dedicatoria_regalo: note || 'Ninguna'
             })
           }).catch(function (err) {
             console.warn('Error enviando a Formspree:', err);
@@ -1217,6 +1225,34 @@
   });
 
   // --------------------------------------------------------------------------
+  // 10. SEGUIMIENTO DE PEDIDOS ("¿DÓNDE ESTÁ MI PEDIDO?")
+  // --------------------------------------------------------------------------
+  function initOrderTracking() {
+    function openTrackPrompt(e) {
+      if (e) e.preventDefault();
+      var lastOrders = [];
+      try {
+        lastOrders = JSON.parse(localStorage.getItem('miyuki_orders') || '[]');
+      } catch (err) {}
+      var defaultRef = lastOrders.length > 0 ? lastOrders[0].ref : '';
+      var promptMsg = defaultRef
+        ? `🔍 Consulta de Pedido Miyuki:\nHemos detectado tu pedido reciente: ${defaultRef}\n\nIntroduce el código que deseas consultar:`
+        : '🔍 Consulta de Pedido Miyuki:\nIntroduce el código de tu joya (ej: #MIY-842):';
+      var code = prompt(promptMsg, defaultRef);
+      if (code !== null) {
+        var cleanCode = code.trim() || defaultRef || 'mi joya';
+        var msg = encodeURIComponent(`✨ ¡Hola! Quería consultar el estado de preparación y envío de mi pedido (${cleanCode}). ¡Muchas gracias!`);
+        window.open(`https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${msg}`, '_blank');
+      }
+    }
+
+    var btnNav = document.getElementById('btn-track-order-nav');
+    var btnFooter = document.getElementById('btn-track-order-footer');
+    if (btnNav) btnNav.addEventListener('click', openTrackPrompt);
+    if (btnFooter) btnFooter.addEventListener('click', openTrackPrompt);
+  }
+
+  // --------------------------------------------------------------------------
   // INICIALIZACIÓN
   // --------------------------------------------------------------------------
   document.addEventListener('DOMContentLoaded', function () {
@@ -1224,6 +1260,7 @@
     loadCart();
     initCartDrawer();
     initBizumCheckout();
+    initOrderTracking();
     initAdminPanel();
     initCategoryFilters();
     initCookieBanner();

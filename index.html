@@ -40,6 +40,7 @@
           <a href="catalogo.html" class="nav-link">Colección</a>
           <a href="#historia" class="nav-link">Quiénes Somos</a>
           <a href="contacto.html" class="nav-link">Contacto &amp; Encargos</a>
+          <a href="#" class="nav-link" id="btn-track-order-nav">🔍 Seguimiento</a>
         </nav>
 
         <div class="nav-actions">
@@ -521,6 +522,33 @@
             </button>
             <span id="formspree-save-msg" style="display:none; color:#1E7E34; font-size:0.85rem; font-weight:600;">✓ ¡Guardado!</span>
           </div>
+
+          <div style="margin-top:1.5rem; padding:1rem; background:#F8F6F0; border-radius:6px; border:1px solid #E4DFD3; font-size:0.8rem; line-height:1.6;">
+            <strong style="color:var(--color-espresso); display:block; margin-bottom:0.4rem;">💌 Plantilla para el Autoresponder de Formspree (Copia para el Cliente):</strong>
+            En tu panel de Formspree ve a <em>Settings &rarr; Autoresponder</em> y pega este texto para que el cliente reciba un correo automático con su código y los datos de Bizum:
+            <textarea readonly style="width:100%; height:140px; margin-top:0.4rem; padding:0.5rem; font-size:0.75rem; border:1px solid #ccc; border-radius:4px; font-family:monospace; background:#fff; color:#333;" onclick="this.select();">¡Hola {{cliente_nombre}}!
+
+Muchísimas gracias por tu pedido en Miyuki Atelier.
+
+Tu código de pedido asignado es: {{codigo_pedido}}
+
+Detalles de tu compra:
+• Piezas: {{joyas_pedidas}}
+• Total a pagar: {{total_a_pagar}}
+• Dirección de entrega: {{direccion_envio}}
+
+Cómo realizar el Bizum:
+1. Envía {{total_a_pagar}} al teléfono: 629 365 884
+2. IMPORTANTE: En el concepto de tu Bizum pon: {{codigo_pedido}}
+
+En cuanto verifiquemos tu Bizum, prepararemos tu joya con su bolsita de lino y te enviaremos el número de seguimiento de Correos.
+
+Si tienes cualquier duda, puedes escribirnos por WhatsApp al 629 365 884 con tu código {{codigo_pedido}}.
+
+Con cariño,
+Miyuki Atelier 🌿</textarea>
+            <small style="color:#777; display:block; margin-top:0.3rem;">Haz clic en el cuadro para seleccionarlo y copiarlo.</small>
+          </div>
         </form>
       </div>
 
@@ -570,8 +598,8 @@
               <input type="tel" id="bizum-customer-phone" class="form-control" placeholder="611 22 33 44" required>
             </div>
             <div class="form-group">
-              <label for="bizum-customer-email">Email (opcional)</label>
-              <input type="email" id="bizum-customer-email" class="form-control" placeholder="carmen@ejemplo.com">
+              <label for="bizum-customer-email">Email (para enviarte tu recibo y código) *</label>
+              <input type="email" id="bizum-customer-email" class="form-control" placeholder="carmen@ejemplo.com" required>
             </div>
           </div>
 
@@ -620,6 +648,7 @@
 
           <p style="margin-bottom:0.4rem;"><strong>Cliente:</strong> <span id="bizum-success-name"></span></p>
           <p style="margin-bottom:0.4rem;"><strong>Teléfono:</strong> <span id="bizum-success-phone"></span></p>
+          <p style="margin-bottom:0.4rem;"><strong>Email:</strong> <span id="bizum-success-email"></span></p>
           <p style="margin-bottom:0.4rem;"><strong>Dirección de envío:</strong> <span id="bizum-success-address"></span></p>
           <div id="bizum-success-note-wrap" style="display:none; margin-bottom:0.4rem;">
             <p><strong>Nota regalo:</strong> <em>"<span id="bizum-success-note"></span>"</em></p>
@@ -639,6 +668,10 @@
               <span id="bizum-success-amount"></span>
             </div>
           </div>
+        </div>
+
+        <div style="font-size:0.8rem; color:#1E7E34; background:#E8F5E9; border:1px solid #C8E6C9; padding:0.6rem 0.75rem; border-radius:6px; margin-bottom:0.75rem; text-align:center;">
+          ✉️ Copia del pedido con tu código enviada a: <strong id="bizum-success-email-badge"></strong>
         </div>
 
         <!-- Caja de Instrucciones Bizum -->
@@ -750,6 +783,7 @@
               <li><a href="catalogo.html">Ver Catálogo</a></li>
               <li><a href="index.html#historia">El Taller Artesanal</a></li>
               <li><a href="contacto.html">Encargos a Medida</a></li>
+              <li><a href="#" id="btn-track-order-footer">🔍 ¿Dónde está mi pedido?</a></li>
               <li><a href="https://wa.me/34629365884">WhatsApp Directo</a></li>
             </ul>
           </div>
