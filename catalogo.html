@@ -267,12 +267,15 @@
             <li>✓ Envío certificado con seguimiento en 24/48h</li>
           </ul>
 
-          <div class="product-modal-actions">
-            <button type="button" class="btn btn-primary btn-full" id="modal-btn-add-cart">
-              Añadir a mi bolsita
+          <div class="product-modal-actions" style="display:flex; flex-direction:column; gap:0.6rem;">
+            <button type="button" class="btn btn-bizum btn-full" id="modal-btn-bizum">
+              📱 Pagar Rápido con Bizum
             </button>
             <button type="button" class="btn btn-whatsapp btn-full" id="modal-btn-whatsapp">
-              📲 Pedir directamente por WhatsApp
+              📲 Pedir por WhatsApp
+            </button>
+            <button type="button" class="btn btn-secondary btn-full" id="modal-btn-add-cart">
+              Añadir a mi bolsita
             </button>
           </div>
         </div>
@@ -444,6 +447,124 @@
     </div>
   </div>
 
+  <!-- =========================================================================
+       MODAL DE CHECKOUT RÁPIDO CON BIZUM
+       ========================================================================= -->
+  <div class="bizum-modal-overlay" id="bizum-checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout Rápido con Bizum">
+    <div class="bizum-modal-card">
+      <button type="button" class="btn-close-modal-detail" id="btn-close-bizum-modal" aria-label="Cerrar ventana">&times;</button>
+      
+      <div id="bizum-step-form">
+        <span class="bizum-header-badge">📱 PAGO RÁPIDO CON BIZUM</span>
+        <h3 style="font-family:var(--font-serif); font-size:1.4rem; margin-bottom:0.25rem;">Finalizar Pedido de Joya</h3>
+        <p style="font-size:0.8rem; color:var(--color-espresso-light); margin-bottom:1rem;">
+          Completa tus datos de envío y transfiere cómodamente desde tu app bancaria.
+        </p>
+
+        <!-- Resumen del Pedido -->
+        <div class="bizum-order-summary">
+          <div class="bizum-order-summary-row" style="font-weight:700; margin-bottom:0.4rem;">
+            <span id="bizum-summary-title">Cargando pedido...</span>
+            <span id="bizum-summary-price">0.00 €</span>
+          </div>
+          <div class="bizum-order-summary-row" style="font-size:0.75rem; color:#777;">
+            <span>Envío certificado (24/48h):</span>
+            <span id="bizum-summary-shipping">Gratis</span>
+          </div>
+          <div class="bizum-order-summary-row" style="font-weight:700; font-size:1.05rem; border-top:1px solid #ddd; margin-top:0.5rem; padding-top:0.5rem; color:var(--color-terracotta);">
+            <span>Total a transferir:</span>
+            <span id="bizum-summary-total">0.00 €</span>
+          </div>
+        </div>
+
+        <!-- Formulario de Envío -->
+        <form id="form-bizum-checkout">
+          <h4 style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.75rem; color:var(--color-espresso);">
+            1. Dirección de Entrega
+          </h4>
+
+          <div class="form-group">
+            <label for="bizum-customer-name">Nombre y Apellidos *</label>
+            <input type="text" id="bizum-customer-name" class="form-control" placeholder="Ej. Carmen Sánchez Romero" required>
+          </div>
+
+          <div class="admin-form-row-2">
+            <div class="form-group">
+              <label for="bizum-customer-phone">Teléfono Móvil (Avisos de Correos) *</label>
+              <input type="tel" id="bizum-customer-phone" class="form-control" placeholder="611 22 33 44" required>
+            </div>
+            <div class="form-group">
+              <label for="bizum-customer-email">Email (opcional para recibo)</label>
+              <input type="email" id="bizum-customer-email" class="form-control" placeholder="carmen@ejemplo.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bizum-customer-address">Calle, Número, Piso / Puerta *</label>
+            <input type="text" id="bizum-customer-address" class="form-control" placeholder="Ej. Calle Gran Vía 14, 3º B" required>
+          </div>
+
+          <div class="admin-form-row-2">
+            <div class="form-group">
+              <label for="bizum-customer-cp">Código Postal *</label>
+              <input type="text" id="bizum-customer-cp" class="form-control" placeholder="28013" required maxlength="5">
+            </div>
+            <div class="form-group">
+              <label for="bizum-customer-city">Ciudad y Provincia *</label>
+              <input type="text" id="bizum-customer-city" class="form-control" placeholder="Madrid" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bizum-customer-note">Dedicatoria para la tarjeta de regalo (opcional)</label>
+            <input type="text" id="bizum-customer-note" class="form-control" placeholder="Ej. 'Para Marta con todo mi cariño en su cumple'">
+          </div>
+
+          <!-- Caja Destacada de Bizum -->
+          <div class="bizum-box">
+            <span style="font-size:0.75rem; font-weight:700; color:#008276; text-transform:uppercase; letter-spacing:0.5px;">
+              2. Envía tu Bizum al siguiente número:
+            </span>
+            <div class="bizum-phone-row">
+              <span class="bizum-phone-number">629 365 884</span>
+              <button type="button" class="btn-copy-bizum" id="btn-copy-bizum-phone">📋 Copiar</button>
+            </div>
+            <p style="font-size:0.78rem; color:#555; margin:0.25rem 0 0 0;">
+              Concepto: <strong id="bizum-suggested-concept">Tu Nombre</strong> • Importe: <strong id="bizum-box-total">0.00 €</strong>
+            </p>
+          </div>
+
+          <button type="submit" class="btn btn-bizum btn-full" id="btn-submit-bizum-order">
+            ✅ Ya he enviado el Bizum • Confirmar Pedido
+          </button>
+        </form>
+      </div>
+
+      <!-- Pantalla de Éxito / Confirmación -->
+      <div id="bizum-step-success" style="display:none; text-align:center; padding:1.5rem 0.5rem;">
+        <div style="font-size:3rem; margin-bottom:0.75rem;">🎉</div>
+        <h3 style="font-family:var(--font-serif); font-size:1.5rem; margin-bottom:0.5rem; color:var(--color-espresso);">
+          ¡Pedido Registrado con Éxito!
+        </h3>
+        <p style="font-size:0.9rem; color:var(--color-espresso-light); line-height:1.6; max-width:24rem; margin:0 auto 1.5rem auto;">
+          Muchas gracias, <strong id="bizum-success-name"></strong>. En cuanto verifiquemos la recepción del Bizum en el taller, empaquetaremos tu joya con su bolsita de lino y tarjeta botánica y te enviaremos el número de seguimiento a tu móvil.
+        </p>
+
+        <div style="background:var(--color-sand-soft); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.5rem; font-size:0.85rem; border:1px solid var(--color-border); text-align:left;">
+          <p style="margin-bottom:0.3rem;"><strong>📦 Referencia:</strong> <span id="bizum-success-ref">#742</span></p>
+          <p style="margin-bottom:0.3rem;"><strong>📍 Envío a:</strong> <span id="bizum-success-address"></span></p>
+          <p style="margin-bottom:0.3rem;"><strong>💎 Pieza(s):</strong> <span id="bizum-success-items"></span></p>
+          <p><strong>💶 Importe Bizum:</strong> <span id="bizum-success-amount"></span></p>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="btn-finish-bizum-modal">
+          Volver a la Tienda
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Carrito Drawer -->
   <div class="cart-drawer-overlay" id="cart-drawer-overlay" role="dialog" aria-modal="true" aria-label="Tu bolsita de compra">
     <div class="cart-drawer">
@@ -459,11 +580,14 @@
           <span>Total:</span>
           <span id="cart-subtotal-price">0.00 €</span>
         </div>
+        <button type="button" class="btn btn-bizum btn-full" id="btn-cart-checkout-bizum" style="margin-bottom:0.6rem;">
+          📱 Pagar Rápido con Bizum
+        </button>
         <button type="button" class="btn btn-whatsapp btn-full" id="btn-checkout-whatsapp">
           📲 Finalizar Pedido por WhatsApp
         </button>
         <p class="cart-note">
-          Confirmas tu pedido directamente con nosotros por WhatsApp para acordar dirección, detalles de regalo y bizum/transferencia cómoda.
+          Envío seguro con número de seguimiento en 24/48h. Empaquetado en bolsita de lino y tarjeta de regalo.
         </p>
       </div>
     </div>

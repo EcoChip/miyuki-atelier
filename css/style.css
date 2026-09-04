@@ -1533,3 +1533,121 @@ textarea.form-control {
   margin-top: 0.75rem;
 }
 
+/* ==========================================================================
+   CHECKOUT RÁPIDO CON BIZUM
+   ========================================================================== */
+.btn-bizum {
+  background-color: #008276;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 130, 118, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-bizum:hover {
+  background-color: #00665D;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.bizum-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(44, 38, 34, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.bizum-modal-overlay.active {
+  display: flex;
+}
+
+.bizum-modal-card {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  max-width: 520px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 2rem 1.75rem;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-border);
+}
+
+.bizum-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #E6F5F3;
+  color: #008276;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.6rem;
+}
+
+.bizum-order-summary {
+  background-color: var(--color-sand-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.bizum-order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-espresso);
+}
+
+.bizum-box {
+  background-color: #F0F9F8;
+  border: 1.5px dashed #008276;
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  text-align: center;
+  margin: 1.25rem 0;
+}
+
+.bizum-phone-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.bizum-phone-number {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #008276;
+  letter-spacing: 1px;
+}
+
+.btn-copy-bizum {
+  background-color: #008276;
+  color: #FFF;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-copy-bizum:hover {
+  background-color: #00665D;
+}
+
+

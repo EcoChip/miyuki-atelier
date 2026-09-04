@@ -916,6 +916,15 @@
       });
     }
 
+    var rejectBtn = document.getElementById('btn-reject-cookies');
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', function () {
+        localStorage.setItem('miyuki_cookies_accepted', 'true');
+        banner.style.display = 'none';
+      });
+    }
+
     if (rejectBtn) {
       rejectBtn.addEventListener('click', function () {
         localStorage.setItem('miyuki_cookies_accepted', 'false');
@@ -924,9 +933,195 @@
     }
   }
 
+  // --------------------------------------------------------------------------
+  // 9. CHECKOUT RÁPIDO CON BIZUM
+  // --------------------------------------------------------------------------
+  var activeBizumOrder = null;
+
+  function openBizumCheckout(singleProduct) {
+    var modal = document.getElementById('bizum-checkout-modal');
+    if (!modal) return;
+
+    var items = [];
+    var subtotal = 0;
+
+    if (singleProduct) {
+      items = [{
+        id: singleProduct.id,
+        title: singleProduct.title,
+        price: parseFloat(singleProduct.price),
+        qty: 1
+      }];
+      subtotal = parseFloat(singleProduct.price);
+    } else {
+      if (cart.length === 0) {
+        alert('Tu bolsita está vacía. Elige una joya para comprar con Bizum.');
+        return;
+      }
+      items = cart.slice();
+      subtotal = calculateSubtotal();
+    }
+
+    var shipping = subtotal >= ATELIER_CONFIG.freeShippingThreshold ? 0 : ATELIER_CONFIG.shippingPrice;
+    var total = subtotal + shipping;
+    var orderRef = '#' + Math.floor(100 + Math.random() * 900);
+
+    activeBizumOrder = {
+      ref: orderRef,
+      items: items,
+      subtotal: subtotal,
+      shipping: shipping,
+      total: total
+    };
+
+    var titleEl = document.getElementById('bizum-summary-title');
+    var priceEl = document.getElementById('bizum-summary-price');
+    var shippingEl = document.getElementById('bizum-summary-shipping');
+    var totalEl = document.getElementById('bizum-summary-total');
+    var boxTotalEl = document.getElementById('bizum-box-total');
+    var conceptEl = document.getElementById('bizum-suggested-concept');
+
+    if (titleEl) {
+      titleEl.textContent = items.length === 1 ? items[0].title : `${items.length} joyas en tu bolsita`;
+    }
+    if (priceEl) priceEl.textContent = subtotal.toFixed(2) + ' €';
+    if (shippingEl) {
+      shippingEl.textContent = shipping === 0 ? 'Gratis (Promoción)' : shipping.toFixed(2) + ' €';
+      shippingEl.style.color = shipping === 0 ? '#1E7E34' : 'inherit';
+    }
+    if (totalEl) totalEl.textContent = total.toFixed(2) + ' €';
+    if (boxTotalEl) boxTotalEl.textContent = total.toFixed(2) + ' €';
+    if (conceptEl) conceptEl.textContent = 'Miyuki ' + orderRef;
+
+    var formStep = document.getElementById('bizum-step-form');
+    var successStep = document.getElementById('bizum-step-success');
+    if (formStep) formStep.style.display = 'block';
+    if (successStep) successStep.style.display = 'none';
+
+    var form = document.getElementById('form-bizum-checkout');
+    if (form) form.reset();
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeBizumCheckout() {
+    var modal = document.getElementById('bizum-checkout-modal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  function initBizumCheckout() {
+    var copyBtn = document.getElementById('btn-copy-bizum-phone');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        navigator.clipboard.writeText('629365884').then(function () {
+          copyBtn.textContent = '¡Copiado! ✓';
+          setTimeout(function () {
+            copyBtn.textContent = '📋 Copiar';
+          }, 2500);
+        }).catch(function () {
+          alert('Número Bizum: 629 365 884');
+        });
+      });
+    }
+
+    var closeBtn = document.getElementById('btn-close-bizum-modal');
+    if (closeBtn) closeBtn.addEventListener('click', closeBizumCheckout);
+
+    var finishBtn = document.getElementById('btn-finish-bizum-modal');
+    if (finishBtn) finishBtn.addEventListener('click', closeBizumCheckout);
+
+    var modalOverlay = document.getElementById('bizum-checkout-modal');
+    if (modalOverlay) {
+      modalOverlay.addEventListener('click', function (e) {
+        if (e.target === modalOverlay) closeBizumCheckout();
+      });
+    }
+
+    var modalBizumBtn = document.getElementById('modal-btn-bizum');
+    if (modalBizumBtn) {
+      modalBizumBtn.addEventListener('click', function () {
+        var products = getProducts();
+        var title = document.getElementById('modal-detail-title').textContent;
+        var prod = products.find(function (p) { return p.title === title; });
+        closeProductDetailModal();
+        openBizumCheckout(prod || { title: title, price: 28.00 });
+      });
+    }
+
+    var cartBizumBtn = document.getElementById('btn-cart-checkout-bizum');
+    if (cartBizumBtn) {
+      cartBizumBtn.addEventListener('click', function () {
+        closeCartDrawer();
+        openBizumCheckout(null);
+      });
+    }
+
+    var form = document.getElementById('form-bizum-checkout');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!activeBizumOrder) return;
+
+        var name = document.getElementById('bizum-customer-name').value.trim();
+        var phone = document.getElementById('bizum-customer-phone').value.trim();
+        var email = document.getElementById('bizum-customer-email') ? document.getElementById('bizum-customer-email').value.trim() : '';
+        var address = document.getElementById('bizum-customer-address').value.trim();
+        var cp = document.getElementById('bizum-customer-cp').value.trim();
+        var city = document.getElementById('bizum-customer-city').value.trim();
+        var note = document.getElementById('bizum-customer-note') ? document.getElementById('bizum-customer-note').value.trim() : '';
+
+        var fullAddress = `${address}, ${cp} ${city}`;
+        var itemsSummary = activeBizumOrder.items.map(function (it) { return `${it.qty || 1}x ${it.title}`; }).join(', ');
+
+        try {
+          var orders = JSON.parse(localStorage.getItem('miyuki_orders') || '[]');
+          orders.unshift({
+            ref: activeBizumOrder.ref,
+            date: new Date().toISOString(),
+            customer: { name: name, phone: phone, email: email, address: fullAddress, note: note },
+            items: activeBizumOrder.items,
+            total: activeBizumOrder.total
+          });
+          localStorage.setItem('miyuki_orders', JSON.stringify(orders));
+        } catch (err) {}
+
+        cart = [];
+        saveCart();
+
+        document.getElementById('bizum-step-form').style.display = 'none';
+        var successStep = document.getElementById('bizum-step-success');
+        successStep.style.display = 'block';
+
+        document.getElementById('bizum-success-name').textContent = name;
+        document.getElementById('bizum-success-ref').textContent = activeBizumOrder.ref;
+        document.getElementById('bizum-success-address').textContent = fullAddress;
+        document.getElementById('bizum-success-items').textContent = itemsSummary;
+        document.getElementById('bizum-success-amount').textContent = activeBizumOrder.total.toFixed(2) + ' €';
+
+        var notifyText = `📦 *NUEVO PEDIDO BIZUM (${activeBizumOrder.ref})*\n\n` +
+          `• *Cliente:* ${name}\n` +
+          `• *Teléfono:* ${phone}\n` +
+          `• *Dirección:* ${fullAddress}\n` +
+          `• *Joya(s):* ${itemsSummary}\n` +
+          `• *Total Bizum enviado:* ${activeBizumOrder.total.toFixed(2)} €\n` +
+          (note ? `• *Dedicatoria:* "${note}"\n` : '') +
+          `\n¡Ya he hecho el Bizum desde la web! Quedo a la espera del envío :)`;
+
+        setTimeout(function () {
+          if (confirm('¿Quieres abrir WhatsApp para confirmar al instante tu pedido con el taller?')) {
+            window.open(`https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`, '_blank');
+          }
+        }, 1200);
+      });
+    }
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       closeProductDetailModal();
+      closeBizumCheckout();
       var loginModal = document.getElementById('admin-login-modal');
       var dashModal = document.getElementById('admin-dashboard-modal');
       if (loginModal) loginModal.classList.remove('active');
@@ -942,6 +1137,7 @@
     fetchProductsFromDatabase();
     loadCart();
     initCartDrawer();
+    initBizumCheckout();
     initAdminPanel();
     initCategoryFilters();
     initCookieBanner();
