@@ -934,7 +934,7 @@
   }
 
   // --------------------------------------------------------------------------
-  // 9. CHECKOUT RÁPIDO CON BIZUM
+  // 9. TRAMITACIÓN DE PEDIDO Y RECIBO CON CÓDIGO BIZUM
   // --------------------------------------------------------------------------
   var activeBizumOrder = null;
 
@@ -955,7 +955,7 @@
       subtotal = parseFloat(singleProduct.price);
     } else {
       if (cart.length === 0) {
-        alert('Tu bolsita está vacía. Elige una joya para comprar con Bizum.');
+        alert('Tu bolsita está vacía. Elige una joya para tramitar el pedido.');
         return;
       }
       items = cart.slice();
@@ -964,7 +964,7 @@
 
     var shipping = subtotal >= ATELIER_CONFIG.freeShippingThreshold ? 0 : ATELIER_CONFIG.shippingPrice;
     var total = subtotal + shipping;
-    var orderRef = '#' + Math.floor(100 + Math.random() * 900);
+    var orderRef = '#MIY-' + Math.floor(100 + Math.random() * 900);
 
     activeBizumOrder = {
       ref: orderRef,
@@ -978,8 +978,6 @@
     var priceEl = document.getElementById('bizum-summary-price');
     var shippingEl = document.getElementById('bizum-summary-shipping');
     var totalEl = document.getElementById('bizum-summary-total');
-    var boxTotalEl = document.getElementById('bizum-box-total');
-    var conceptEl = document.getElementById('bizum-suggested-concept');
 
     if (titleEl) {
       titleEl.textContent = items.length === 1 ? items[0].title : `${items.length} joyas en tu bolsita`;
@@ -990,8 +988,6 @@
       shippingEl.style.color = shipping === 0 ? '#1E7E34' : 'inherit';
     }
     if (totalEl) totalEl.textContent = total.toFixed(2) + ' €';
-    if (boxTotalEl) boxTotalEl.textContent = total.toFixed(2) + ' €';
-    if (conceptEl) conceptEl.textContent = 'Miyuki ' + orderRef;
 
     var formStep = document.getElementById('bizum-step-form');
     var successStep = document.getElementById('bizum-step-success');
@@ -1012,17 +1008,29 @@
   }
 
   function initBizumCheckout() {
-    var copyBtn = document.getElementById('btn-copy-bizum-phone');
-    if (copyBtn) {
-      copyBtn.addEventListener('click', function () {
+    // Copiar teléfono
+    var copyPhoneBtn = document.getElementById('btn-copy-bizum-phone');
+    if (copyPhoneBtn) {
+      copyPhoneBtn.addEventListener('click', function () {
         navigator.clipboard.writeText('629365884').then(function () {
-          copyBtn.textContent = '¡Copiado! ✓';
-          setTimeout(function () {
-            copyBtn.textContent = '📋 Copiar';
-          }, 2500);
+          copyPhoneBtn.textContent = '¡Copiado! ✓';
+          setTimeout(function () { copyPhoneBtn.textContent = '📋 Copiar'; }, 2500);
         }).catch(function () {
           alert('Número Bizum: 629 365 884');
         });
+      });
+    }
+
+    // Copiar código de pedido Bizum
+    var copyCodeBtn = document.getElementById('btn-copy-bizum-code');
+    if (copyCodeBtn) {
+      copyCodeBtn.addEventListener('click', function () {
+        if (activeBizumOrder) {
+          navigator.clipboard.writeText(activeBizumOrder.ref).then(function () {
+            copyCodeBtn.textContent = '¡Copiado! ✓';
+            setTimeout(function () { copyCodeBtn.textContent = '📋 Copiar Código'; }, 2500);
+          });
+        }
       });
     }
 
@@ -1039,9 +1047,10 @@
       });
     }
 
-    var modalBizumBtn = document.getElementById('modal-btn-bizum');
-    if (modalBizumBtn) {
-      modalBizumBtn.addEventListener('click', function () {
+    // Trigger en modal de producto ("Comprar Joya")
+    var modalBuyBtn = document.getElementById('modal-btn-buy');
+    if (modalBuyBtn) {
+      modalBuyBtn.addEventListener('click', function () {
         var products = getProducts();
         var title = document.getElementById('modal-detail-title').textContent;
         var prod = products.find(function (p) { return p.title === title; });
@@ -1050,14 +1059,16 @@
       });
     }
 
-    var cartBizumBtn = document.getElementById('btn-cart-checkout-bizum');
-    if (cartBizumBtn) {
-      cartBizumBtn.addEventListener('click', function () {
+    // Trigger en carrito ("Tramitar Pedido")
+    var cartCheckoutBtn = document.getElementById('btn-cart-checkout');
+    if (cartCheckoutBtn) {
+      cartCheckoutBtn.addEventListener('click', function () {
         closeCartDrawer();
         openBizumCheckout(null);
       });
     }
 
+    // Formulario de envío -> Pasa a Recibo y Notifica
     var form = document.getElementById('form-bizum-checkout');
     if (form) {
       form.addEventListener('submit', function (e) {
@@ -1075,6 +1086,7 @@
         var fullAddress = `${address}, ${cp} ${city}`;
         var itemsSummary = activeBizumOrder.items.map(function (it) { return `${it.qty || 1}x ${it.title}`; }).join(', ');
 
+        // Guardar pedido localmente
         try {
           var orders = JSON.parse(localStorage.getItem('miyuki_orders') || '[]');
           orders.unshift({
@@ -1090,30 +1102,59 @@
         cart = [];
         saveCart();
 
+        // 1. Ocultar formulario y mostrar RECIBO DIGITAL
         document.getElementById('bizum-step-form').style.display = 'none';
         var successStep = document.getElementById('bizum-step-success');
         successStep.style.display = 'block';
 
+        // 2. Rellenar datos en el recibo
+        var today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+        var dateEl = document.getElementById('receipt-date');
+        if (dateEl) dateEl.textContent = today;
+
         document.getElementById('bizum-success-name').textContent = name;
-        document.getElementById('bizum-success-ref').textContent = activeBizumOrder.ref;
+        document.getElementById('bizum-success-phone').textContent = phone;
         document.getElementById('bizum-success-address').textContent = fullAddress;
         document.getElementById('bizum-success-items').textContent = itemsSummary;
-        document.getElementById('bizum-success-amount').textContent = activeBizumOrder.total.toFixed(2) + ' €';
+        
+        var subtotalEl = document.getElementById('bizum-success-subtotal');
+        if (subtotalEl) subtotalEl.textContent = activeBizumOrder.subtotal.toFixed(2) + ' €';
 
-        var notifyText = `📦 *NUEVO PEDIDO BIZUM (${activeBizumOrder.ref})*\n\n` +
+        var shipEl = document.getElementById('bizum-success-shipping');
+        if (shipEl) shipEl.textContent = activeBizumOrder.shipping === 0 ? 'Gratis' : activeBizumOrder.shipping.toFixed(2) + ' €';
+
+        document.getElementById('bizum-success-amount').textContent = activeBizumOrder.total.toFixed(2) + ' €';
+        document.getElementById('bizum-success-ref').textContent = activeBizumOrder.ref;
+
+        var noteWrap = document.getElementById('bizum-success-note-wrap');
+        var noteVal = document.getElementById('bizum-success-note');
+        if (note && noteWrap && noteVal) {
+          noteWrap.style.display = 'block';
+          noteVal.textContent = note;
+        } else if (noteWrap) {
+          noteWrap.style.display = 'none';
+        }
+
+        // 3. Preparar mensaje de WhatsApp para el taller con el código de Bizum
+        var notifyText = `📦 *NUEVO PEDIDO REGISTRADO (${activeBizumOrder.ref})*\n\n` +
           `• *Cliente:* ${name}\n` +
           `• *Teléfono:* ${phone}\n` +
-          `• *Dirección:* ${fullAddress}\n` +
+          `• *Dirección de envío:* ${fullAddress}\n` +
           `• *Joya(s):* ${itemsSummary}\n` +
-          `• *Total Bizum enviado:* ${activeBizumOrder.total.toFixed(2)} €\n` +
+          `• *Total:* ${activeBizumOrder.total.toFixed(2)} €\n` +
           (note ? `• *Dedicatoria:* "${note}"\n` : '') +
-          `\n¡Ya he hecho el Bizum desde la web! Quedo a la espera del envío :)`;
+          `\n🔑 *CÓDIGO DE BIZUM ASIGNADO:* ${activeBizumOrder.ref}\n` +
+          `He guardado mis datos en la web y voy a emitir el Bizum a tu número con este código. ¡Muchas gracias!`;
 
+        var waBtn = document.getElementById('btn-notify-whatsapp-receipt');
+        if (waBtn) {
+          waBtn.href = `https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`;
+        }
+
+        // Abrir WhatsApp automáticamente para enviar los datos a mamá
         setTimeout(function () {
-          if (confirm('¿Quieres abrir WhatsApp para confirmar al instante tu pedido con el taller?')) {
-            window.open(`https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`, '_blank');
-          }
-        }, 1200);
+          window.open(`https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`, '_blank');
+        }, 600);
       });
     }
   }

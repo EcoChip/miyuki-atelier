@@ -1650,4 +1650,61 @@ textarea.form-control {
   background-color: #00665D;
 }
 
+/* Recibo Digital de Boutique */
+.boutique-receipt {
+  background-color: #FAF8F5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 1px dashed #D0C9C0;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.receipt-code-box {
+  background: #FFFFFF;
+  border: 2px solid #008276;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  margin: 1.25rem 0;
+  box-shadow: 0 4px 15px rgba(0, 130, 118, 0.08);
+}
+
+.receipt-code-val {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #008276;
+  letter-spacing: 2px;
+  display: block;
+  margin: 0.3rem 0;
+}
+
+.receipt-line-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3rem 0;
+  color: var(--color-espresso);
+}
+
+.receipt-total-line {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px dashed #D0C9C0;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-terracotta);
+}
+
 
