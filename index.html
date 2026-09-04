@@ -331,7 +331,7 @@
               Añadir a mi bolsita
             </button>
             <button type="button" class="btn btn-whatsapp btn-full" id="modal-btn-whatsapp">
-              📲 Consultar dudas por WhatsApp
+              📲 Hacer Pedido vía WhatsApp o Dudas
             </button>
           </div>
         </div>
@@ -387,6 +387,7 @@
         <button type="button" class="admin-tab-btn" data-tab="tab-manage-products">📦 Gestionar Anuncios</button>
         <button type="button" class="admin-tab-btn" data-tab="tab-change-pwd">🔑 Cambiar Contraseña</button>
         <button type="button" class="admin-tab-btn" data-tab="tab-supabase">☁️ Supabase 24/7</button>
+        <button type="button" class="admin-tab-btn" data-tab="tab-email">📬 Avisos por Email</button>
       </div>
 
       <!-- Tab 1: Crear Anuncio -->
@@ -497,6 +498,29 @@
           <button type="submit" class="btn btn-primary" id="btn-save-supabase">
             Guardar Conexión Supabase
           </button>
+        </form>
+      </div>
+
+      <!-- Tab 5: Avisos de Pedido por Email (Formspree) -->
+      <div class="admin-tab-content" id="tab-email" style="display:none;">
+        <form id="form-connect-formspree" class="admin-form" style="max-width:32rem;">
+          <h4 style="font-size:1.1rem; margin-bottom:0.5rem; color:var(--color-espresso);">Recepción de Pedidos por Email (Formspree)</h4>
+          <p style="font-size:0.8rem; color:var(--color-espresso-light); line-height:1.5; margin-bottom:1rem;">
+            Para recibir los avisos de nuevos pedidos directamente en el correo de tu madre sin obligar al cliente a abrir WhatsApp:
+            <br>1. Regístrate gratis en <a href="https://formspree.io" target="_blank" rel="noopener noreferrer" style="color:var(--color-terracotta); font-weight:600;">formspree.io</a>.
+            <br>2. Crea un formulario con el email donde quieres recibir los pedidos.
+            <br>3. Pega aquí el ID o el enlace que te dé Formspree (ejemplo: <code>xpwzqkro</code> o <code>https://formspree.io/f/xpwzqkro</code>).
+          </p>
+          <div class="form-group">
+            <label for="admin-formspree-id">ID o Enlace de Formspree</label>
+            <input type="text" id="admin-formspree-id" class="form-control" placeholder="Ej. xpwzqkro">
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <button type="submit" class="btn btn-primary" id="btn-save-formspree">
+              Guardar Configuración de Email
+            </button>
+            <span id="formspree-save-msg" style="display:none; color:#1E7E34; font-size:0.85rem; font-weight:600;">✓ ¡Guardado!</span>
+          </div>
         </form>
       </div>
 
@@ -643,7 +667,7 @@
 
         <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:1rem;">
           <a href="#" class="btn btn-whatsapp btn-full" id="btn-notify-whatsapp-receipt" target="_blank">
-            📲 Avisar al Taller por WhatsApp (Opcional)
+            📲 Enviar Pedido vía WhatsApp o Dudas (Opcional)
           </a>
           <button type="button" class="btn btn-secondary btn-full" id="btn-finish-bizum-modal">
             Volver a la Tienda
@@ -673,7 +697,7 @@
           🛍️ Tramitar Pedido (Dirección y Pago)
         </button>
         <button type="button" class="btn btn-whatsapp btn-full" id="btn-checkout-whatsapp">
-          📲 Consultar dudas por WhatsApp
+          📲 Hacer Pedido vía WhatsApp o Dudas
         </button>
         <p class="cart-note">
           Envío seguro con número de seguimiento en 24/48h. Empaquetado en bolsita de lino y tarjeta de regalo.

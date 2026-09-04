@@ -14,7 +14,8 @@
     shippingPrice: 3.95,
     freeShippingThreshold: 45.00,
     salt: 'miyuki_salt_secure_',
-    defaultMasterHash: 'b7197a251604bc34e3fb2ac3596f6cad62e424f3c52e04e1a3e31ed3bf9c40e0' // "TallerMiyuki2026!"
+    defaultMasterHash: 'b7197a251604bc34e3fb2ac3596f6cad62e424f3c52e04e1a3e31ed3bf9c40e0', // "TallerMiyuki2026!"
+    formspreeId: localStorage.getItem('miyuki_formspree_id') || ''
   };
 
   // Variable de estado en memoria
@@ -762,6 +763,29 @@
       });
     }
 
+    // Configuración de Notificaciones por Email (Formspree)
+    var formConnectFs = document.getElementById('form-connect-formspree');
+    var fsInput = document.getElementById('admin-formspree-id');
+    var fsSaveMsg = document.getElementById('formspree-save-msg');
+
+    if (fsInput) {
+      fsInput.value = localStorage.getItem('miyuki_formspree_id') || '';
+    }
+
+    if (formConnectFs) {
+      formConnectFs.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var val = fsInput ? fsInput.value.trim() : '';
+        localStorage.setItem('miyuki_formspree_id', val);
+        ATELIER_CONFIG.formspreeId = val;
+        if (fsSaveMsg) {
+          fsSaveMsg.style.display = 'inline';
+          setTimeout(function () { fsSaveMsg.style.display = 'none'; }, 3000);
+        }
+        alert('✓ ¡Configuración de Formspree guardada con éxito!\nA partir de ahora los pedidos se notificarán directamente a tu correo electrónico.');
+      });
+    }
+
     // Cambiar Contraseña del Taller
     var formChangePwd = document.getElementById('form-change-password');
     if (formChangePwd) {
@@ -1135,26 +1159,47 @@
           noteWrap.style.display = 'none';
         }
 
-        // 3. Preparar mensaje de WhatsApp para el taller con el código de Bizum
-        var notifyText = `📦 *NUEVO PEDIDO REGISTRADO (${activeBizumOrder.ref})*\n\n` +
+        // 3. Enviar notificación por Email vía Formspree (en segundo plano y silencioso)
+        var formspreeId = ATELIER_CONFIG.formspreeId || localStorage.getItem('miyuki_formspree_id');
+        if (formspreeId) {
+          var endpoint = formspreeId.startsWith('http') ? formspreeId : `https://formspree.io/f/${formspreeId}`;
+          fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              _subject: `📦 Nuevo Pedido ${activeBizumOrder.ref} - ${name} (Bizum Pendiente)`,
+              codigo_pedido: activeBizumOrder.ref,
+              cliente_nombre: name,
+              cliente_telefono: phone,
+              cliente_email: email || 'No indicado',
+              direccion_envio: fullAddress,
+              joyas_pedidas: itemsSummary,
+              subtotal: activeBizumOrder.subtotal.toFixed(2) + ' €',
+              envio: activeBizumOrder.shipping === 0 ? 'Gratis' : activeBizumOrder.shipping.toFixed(2) + ' €',
+              total_a_pagar: activeBizumOrder.total.toFixed(2) + ' €',
+              dedicatoria_regalo: note || 'Ninguna',
+              estado: 'El cliente ve su recibo en pantalla y enviará el Bizum con este código: ' + activeBizumOrder.ref
+            })
+          }).catch(function (err) {
+            console.warn('Error enviando a Formspree:', err);
+          });
+        }
+
+        // 4. Preparar mensaje de WhatsApp para el botón opcional (sin abrir ventanas emergentes)
+        var notifyText = `📦 *PEDIDO REGISTRADO (${activeBizumOrder.ref})*\n\n` +
           `• *Cliente:* ${name}\n` +
           `• *Teléfono:* ${phone}\n` +
           `• *Dirección de envío:* ${fullAddress}\n` +
           `• *Joya(s):* ${itemsSummary}\n` +
           `• *Total:* ${activeBizumOrder.total.toFixed(2)} €\n` +
           (note ? `• *Dedicatoria:* "${note}"\n` : '') +
-          `\n🔑 *CÓDIGO DE BIZUM ASIGNADO:* ${activeBizumOrder.ref}\n` +
-          `He guardado mis datos en la web y voy a emitir el Bizum a tu número con este código. ¡Muchas gracias!`;
+          `\n🔑 *CÓDIGO DE BIZUM:* ${activeBizumOrder.ref}\n` +
+          `Hola! He tramitado este pedido en la web con este código de Bizum.`;
 
         var waBtn = document.getElementById('btn-notify-whatsapp-receipt');
         if (waBtn) {
           waBtn.href = `https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`;
         }
-
-        // Abrir WhatsApp automáticamente para enviar los datos a mamá
-        setTimeout(function () {
-          window.open(`https://wa.me/${ATELIER_CONFIG.whatsappNumber}?text=${encodeURIComponent(notifyText)}`, '_blank');
-        }, 600);
       });
     }
   }
